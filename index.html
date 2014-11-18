@@ -12,7 +12,7 @@
 
 
 
-	<title>ok, 1v1 me</title>
+	<title>metatwitch</title>
 
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="jquery.js"></script>
@@ -20,14 +20,26 @@
 </head>
 <body>
 
-<div class="container">
-      <div class="page-header">
-        <h1>twitch chat for imaqtpie</h1>
-      </div>
-      <p class="lead" id="chatbox"></p>
-    </div>
 
-	</body>
+
+	<div class="container">
+
+		<div id="stats" class="row">
+		</div>
+
+		<div class="page-header">
+			<div class="input-group input-group-lg">
+			    <span class="input-group-addon">@</span>
+			    <input type="text" class="form-control" placeholder="Username" onchange="changeStreamer();">
+			</div>
+		    <h1>twitch chat for imaqtpie</h1>
+		</div>
+		<div style="overflow: auto">
+		<p class="lead" id="chatbox"></p>
+		</div>
+	</div>
+
+</body>
 
 	<script src="game.js"></script>
 
