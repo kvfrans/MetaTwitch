@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+
+
+
+	<title>metatwitch</title>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="../jquery.js"></script>
+
+</head>
+<body>
+
+
+
+	<div class="container">
+
+
+
+		<div class="page-header">
+			<div class="input-group input-group-lg">
+			    <span class="input-group-addon">@</span>
+			    <input type="text" class="form-control" placeholder="Username" onchange="changeStreamer();">
+			</div>
+		    <h1>top trends in twitch chat</h1>
+		</div>
+
+
+
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">chat</h3>
+		  </div>
+		  <div class="panel-body">
+		    <table id="stats" class="table table-hover">
+			    <tr>
+	              <th>phrase</th>
+	              <th>times said</th>
+	            </tr>
+			</table>
+		  </div>
+		</div>
+
+		<div style="overflow: auto">
+		<p class="lead" id="chatbox"></p>
+		</div>
+	</div>
+
+</body>
+
+	<script src="trends.js"></script>
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+	</script>
+</html>

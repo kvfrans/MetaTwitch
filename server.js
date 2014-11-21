@@ -15,6 +15,8 @@ var streamersReady = false;
 // io.emit("hasStreamers",{});
 
 
+
+
  io.on('connect', function() {
     // console.log('connected');
     if(streamersReady)
@@ -24,7 +26,21 @@ var streamersReady = false;
  });
 
 
+ //logging messages to check for repeats
+var recentChats = [];
+var repeatedChats = [];
 
+var streamerChats = {};
+
+
+var trendsjson = require('./trends/trends.json');
+
+repeatedChats = trendsjson;
+
+var streamdata = require('./stream/streamdata.json');
+
+streamerChats = streamdata;
+// console.log(repeatedChats);
 
 var streamers = [];
 
@@ -161,6 +177,86 @@ function addStreamersForGame(game,isLast)
                 // }
                 console.log("[" + channel + "] " + user.username + ": " + message);
                 io.emit("newChat",{message: message, user: user.username, channel: channel.replaceAll("#","")});
+
+                var lowchan = channel.replaceAll("#","");
+
+                var didFind = false;
+                for(var i = 0; i < recentChats.length; i++)
+                {
+                    if(recentChats[i] == message)
+                    {
+                        // console.log("two chts of " + message);
+                        var foundInData = false;
+                        for(var i = 0; i < repeatedChats.length; i++)
+                        {
+                            if(repeatedChats[i].message == message)
+                            {
+                                foundInData = true;
+                                repeatedChats[i] = {message: message, repeats: repeatedChats[i].repeats + 1};
+                                break;
+                            }
+                        }
+
+                        if(foundInData)
+                        {
+                            // repeatedChats[i] = {message: message, repeats: repeatedChats[i].repeats + 1};
+                        }
+                        else
+                        {
+                            repeatedChats.push({message: message, repeats: 1});
+                        }
+
+
+                        if(streamerChats[lowchan] == null)
+                        {
+                            streamerChats[lowchan] = [];
+                            streamerChats[lowchan].push({message: message, repeats: 1});
+                            // console.log("new");
+                        }
+                        else
+                        {
+                            // console.log("no new");
+                            var foundOther = false;
+                            for(var x = 0; x < streamerChats[lowchan].length; x++)
+                            {
+                                if(streamerChats[lowchan][x].message == message)
+                                {
+                                    streamerChats[lowchan][x] = {message: message, repeats: streamerChats[lowchan][x].repeats + 1};
+                                    foundOther = true;
+                                }
+                            }
+
+                            if(!foundOther)
+                            {
+                                streamerChats[lowchan].push({message: message, repeats: 1});
+                            }
+                        }
+
+
+                        fs.writeFile('trends/trends.json', JSON.stringify(repeatedChats), function (err) {
+                              if (err) return console.log(err);
+                              // console.log('Hello World > helloworld.txt');
+                        });
+                        didFind = true;
+                        break;
+                    }
+                }
+                if(!didFind)
+                {
+                    recentChats.push(message);
+                }
+
+
+
+
+
+                // console.log(streamerChats);
+                fs.writeFile('stream/streamdata.json', JSON.stringify(streamerChats), function (err) {
+                              if (err) return console.log(err);
+                              // console.log('Hello World > helloworld.txt');
+                        });
+
+
             });
         }
 
@@ -172,6 +268,14 @@ function addStreamersForGame(game,isLast)
 req.on('error', function(e) {
   console.log('ERROR: ' + e.message);
 });
+
+
+
+
+
+
+
+
 
 
 
