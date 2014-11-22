@@ -18,7 +18,7 @@
 	<script src="../jquery.js"></script>
 
 </head>
-<body>
+<body onload="loaded()">
 
 
 
@@ -31,7 +31,7 @@
 		<div class="page-header">
 			<div class="input-group input-group-lg">
 			    <span class="input-group-addon">@</span>
-			    <input type="text" class="form-control" placeholder="Username" onchange="changeStreamer();">
+			    <input id="newstreamer" type="text" class="form-control" placeholder="Username" onchange="changeStreamer();">
 			</div>
 		    <h1>stats for stream</h1>
 		</div>

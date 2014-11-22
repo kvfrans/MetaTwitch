@@ -1,8 +1,24 @@
 //helper things to initiate
 var socket = io.connect('localhost:5000');
 
-var streamer = "trick2g";
+var streamer;
 
+
+
+
+
+
+
+function GetUrlValue(VarSearch){
+    var SearchString = window.location.search.substring(1);
+    var VariableArray = SearchString.split('&');
+    for(var i = 0; i < VariableArray.length; i++){
+        var KeyValuePair = VariableArray[i].split('=');
+        if(KeyValuePair[0] == VarSearch){
+            return KeyValuePair[1];
+        }
+    }
+}
 
 
 // $.ajax({
@@ -33,23 +49,7 @@ function compare(a,b) {
 }
 
 
-jQuery.get('streamdata.json', function(data) {
-    // var glacier = JSON.parse(data);
-    console.log(data);
 
-    data = data[streamer];
-
-    data.sort(compare);
-
-      for(var i = 0; i < data.length; i++)
-        {
-
-            console.log("filled row");
-            $("#stats").html($("#stats").html() + "<tr><td>\"" + data[i].message + "\"</td><td>" + data[i].repeats + "</td></tr>");
-        }
-
-    // sortTable();
-});
 
 
 
@@ -69,8 +69,38 @@ socket.on('newChat', function (data)
 function changeStreamer()
 {
   // streamer =
+  location.replace("?stream=" + $("#newstreamer").val());
 }
 
+function loaded()
+{
+
+	streamer = GetUrlValue("stream");
+
+	if(streamer == null)
+	{
+		streamer = "scarra";
+	}
+
+
+	jQuery.get('streamdata.json', function(data) {
+    // var glacier = JSON.parse(data);
+    console.log(data);
+
+    data = data[streamer];
+
+    data.sort(compare);
+
+      for(var i = 0; i < data.length; i++)
+        {
+
+            console.log("filled row");
+            $("#stats").html($("#stats").html() + "<tr><td>\"" + data[i].message + "\"</td><td>" + data[i].repeats + "</td></tr>");
+        }
+
+    // sortTable();
+});
+}
 
 
 

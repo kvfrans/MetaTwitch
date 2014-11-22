@@ -28,7 +28,7 @@ jQuery.get('trends.json', function(data) {
 
     data.sort(compare);
 
-      for(var i = 0; i < data.length; i++)
+      for(var i = 0; i < 50; i++)
         {
 
             console.log("filled row");

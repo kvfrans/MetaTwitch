@@ -37,7 +37,7 @@ socket.on('hasStreamers', function (data)
     {
 
         console.log("filled row");
-        $("#stats").html($("#stats").html() + "<div class=\"col-md-3\"><div class=\"panel panel-default\"><div class=\"panel-heading\"><h3 class=\"panel-title\">"+ data.streamers[i].name +"</h3></div><div class=\"panel-body\"><div id=\"game" + data.streamers[i].name.toLowerCase() + "\"> Playing: "+ data.streamers[i].game +"</div><div id=\"chats-" + data.streamers[i].name.toLowerCase() + "\">Warming up chats...</div><div id=\"cps-" + data.streamers[i].name.toLowerCase() + "\">Warming up CPS...</div><div id=\"trendcount-" + data.streamers[i].name.toLowerCase() + "\">Warming up number of trends...</div></div></div></div>");
+        $("#stats").html($("#stats").html() + "<div class=\"col-md-3\"><div class=\"panel panel-default\"><div class=\"panel-heading\"><h3 class=\"panel-title\"><a href=\"stream/?stream="+ data.streamers[i].name.toLowerCase() + "\">" + data.streamers[i].name +"</a></h3></div><div class=\"panel-body\"><div id=\"game" + data.streamers[i].name.toLowerCase() + "\"> Playing: "+ data.streamers[i].game +"</div><div id=\"chats-" + data.streamers[i].name.toLowerCase() + "\">Warming up chats...</div><div id=\"cps-" + data.streamers[i].name.toLowerCase() + "\">Warming up CPS...</div><div id=\"trendcount-" + data.streamers[i].name.toLowerCase() + "\">Warming up number of trends...</div></div></div></div>");
         // }
 
         streamerstats[data.streamers[i].name.toLowerCase()] = {name: data.streamers[i].name, chats: 0, secondslate: 0};
