@@ -38,6 +38,7 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="../jquery.js"></script>
 
+
 </head>
 <body onload="loaded()">
 
@@ -72,36 +73,53 @@
 
 
 		<div class="page-header">
-			<!-- <div class="input-group input-group-lg">
+			<div class="input-group input-group-lg">
 			    <span class="input-group-addon">@</span>
 			    <input id="newstreamer" type="text" class="form-control" placeholder="Username" onchange="changeStreamer();">
-			</div> -->
-		    <h1 id="title">stats for stream</h1>
+			</div>
+		    <h1 id="title">stats for </h1>
+		</div>
+
+		<!-- <div> -->
+		<div class="col-md-6">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">Streams where this phrase is popular</h3>
+			  </div>
+			  <div class="panel-body">
+			    <table id="stats" class="table table-hover">
+				    <tr>
+		              <th>stream</th>
+		              <th>times said</th>
+		            </tr>
+				</table>
+			  </div>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">Stream breakdown</h3>
+			  </div>
+			  <div class="panel-body">
+
+				  <canvas id="myChart" width="400" height="400"></canvas>
+
+			  </div>
+			</div>
 		</div>
 
 
+		<!-- </div> -->
 
-		<div class="panel panel-default">
-		  <div class="panel-heading">
-		    <h3 class="panel-title">Trends</h3>
-		  </div>
-		  <div class="panel-body">
-		    <table id="stats" class="table table-hover">
-			    <tr>
-	              <th>phrase</th>
-	              <th>times said</th>
-	            </tr>
-			</table>
-		  </div>
-		</div>
-
-		<div class="panel panel-default">
+		<!-- <div class="panel panel-default">
 		  <div class="panel-heading">
 		    <h3 class="panel-title">Live Chat</h3>
 		  </div>
 		  <div class="panel-body" id="chats">
 		  </div>
-		</div>
+		</div> -->
 
 		<div style="overflow: auto">
 		<p class="lead" id="chatbox"></p>
@@ -109,7 +127,7 @@
 	</div>
 
 </body>
-
+	<script src="../Chart.js"></script>
 	<script src="stream.js"></script>
 
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>

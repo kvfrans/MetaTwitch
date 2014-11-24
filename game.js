@@ -9,6 +9,8 @@ var secondspast = 0;
 // create an new instance of a pixi stage
 
 
+
+
 socket.on('newChat', function (data)
 {
     // console.log(data.user);
@@ -18,15 +20,33 @@ socket.on('newChat', function (data)
         {
             streamerstats[data.channel].secondslate = secondspast;
         }
-        // $("#chatbox").html($("#chatbox").html() + '<br>' + "[" + data.channel + "] " + data.user + ": " + data.message);
+        $("#chatbox").html($("#chatbox").html() + '<br>' + "[" + data.channel + "] " + data.user + ": " + data.message);
+        var d = $('#scrollbox');
+        d.scrollTop(d.prop("scrollHeight"));
         // console.log(data.channel);
         streamerstats[data.channel].chats++;
         // console.log(streamerstats[data.channel].chats);
-        $("#chats-" + data.channel).html("chats: " + streamerstats[data.channel].chats);
+        // $("#chats-" + data.channel).html("chats: " + streamerstats[data.channel].chats);
 
-        $("#cps-" + data.channel).html("CPM: " + streamerstats[data.channel].chats/(secondspast - streamerstats[data.channel].secondslate));
+        // $("#cps-" + data.channel).html("CPM: " + streamerstats[data.channel].chats/(secondspast - streamerstats[data.channel].secondslate));
     }
 
+});
+
+jQuery.get('trends/trends.json', function(data) {
+    // var glacier = JSON.parse(data);
+    console.log(data);
+
+    data.sort(compare);
+
+      for(var i = 0; i < 50; i++)
+        {
+
+            console.log("filled row");
+            $("#stats").html($("#stats").html() + "<tr><td><a href=\"/chat/?chat=" + data[i].message.replace(" ","+")  + "\">" + data[i].message + "</a></td><td>" + data[i].repeats + "</td></tr>");
+        }
+
+    // sortTable();
 });
 
 socket.on('hasStreamers', function (data)
@@ -72,6 +92,13 @@ socket.on('hasStreamers', function (data)
 
 });
 
+function compare(a,b) {
+  if (a.repeats < b.repeats)
+     return 1;
+  if (a.repeats > b.repeats)
+    return -1;
+  return 0;
+}
 
 window.setInterval(function(){
   /// call your function here

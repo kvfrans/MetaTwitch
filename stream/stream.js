@@ -76,6 +76,7 @@ function loaded()
 {
 
 	streamer = GetUrlValue("stream");
+  $("#title").html("stats for \"" + streamer + "\"");
 
 	if(streamer == null)
 	{
@@ -95,7 +96,8 @@ function loaded()
         {
 
             console.log("filled row");
-            $("#stats").html($("#stats").html() + "<tr><td>\"" + data[i].message + "\"</td><td>" + data[i].repeats + "</td></tr>");
+            $("#stats").html($("#stats").html() + "<tr><td><a href=\"../chat/?chat=" + data[i].message + "\">" + data[i].message + "</td><td>" + data[i].repeats + "</td></tr>");
+            // $("#stats").html($("#stats").html() + "<tr><td>\"" + data[i].message + "\"</td><td>" + data[i].repeats + "</td></tr>");
         }
 
     // sortTable();

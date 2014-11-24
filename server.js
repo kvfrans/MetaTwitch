@@ -113,7 +113,7 @@ function addStreamersForGame(game,isLast)
         var json = JSON.parse(body);
 
         // var tempstreamers = [];
-        // console.log(json);
+        console.log(json);
         for(var i = 0; i < json.streams.length; i++)
         {
             var name = json.streams[i].channel.display_name;
@@ -156,10 +156,11 @@ function addStreamersForGame(game,isLast)
                     tc: 3
                 },
                 identity: {
-                    username: 'tacoexplosion',
-                    password: 'oauth:250js88su6tihuj85cxcaywmq0c6my'
+                    username: 'tacomod1442',
+                    password: 'oauth:h86863wkv1ozgufno15uhxoeyg98gq'
                 },
-                channels: streamernames
+                // channels: streamernames
+                channels: ["moonmeander"]
             });
 
 
@@ -192,7 +193,17 @@ function addStreamersForGame(game,isLast)
                             if(repeatedChats[i].message == message)
                             {
                                 foundInData = true;
-                                repeatedChats[i] = {message: message, repeats: repeatedChats[i].repeats + 1};
+                                repeatedChats[i] = {message: message, repeats: repeatedChats[i].repeats + 1, streamers: repeatedChats[i].streamers};
+
+                                if(repeatedChats[i].streamers[lowchan] != null)
+                                {
+                                    repeatedChats[i].streamers[lowchan] = repeatedChats[i].streamers[lowchan] + 1;
+                                }
+                                else
+                                {
+                                    repeatedChats[i].streamers[lowchan] = 1;
+                                }
+
                                 break;
                             }
                         }
@@ -203,7 +214,8 @@ function addStreamersForGame(game,isLast)
                         }
                         else
                         {
-                            repeatedChats.push({message: message, repeats: 1});
+                            repeatedChats.push({message: message, repeats: 1, streamers: {}});
+                            repeatedChats[repeatedChats.length-1].streamers[lowchan] = 1;
                         }
 
 
