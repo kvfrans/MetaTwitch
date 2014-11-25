@@ -32,6 +32,8 @@ var repeatedChats = [];
 
 var streamerChats = {};
 
+var streamerRatio = {};
+
 
 var trendsjson = require('./trends/trends.json');
 
@@ -88,8 +90,20 @@ var req = http.get(options, function(res) {
 
 function addStreamersForGame(game,isLast)
 {
-    console.log("attempting to load streamers for " + game);
+
     var http = require('https');
+
+    // game.replaceAll("%E9","adsadasdsadsadasd");
+    console.log(game);
+
+    if(game.indexOf("\u00e9") > -1)
+    {
+        console.log("HEYEYHEY");
+    }
+    else
+    {
+
+
 
     var options2 = {
       host: 'api.twitch.tv',
@@ -108,6 +122,8 @@ function addStreamersForGame(game,isLast)
       }).on('end', function() {
         var body = Buffer.concat(bodyChunks);
         // console.log('BODY: ' + body);
+
+        console.log("attempting to load streamers for " + options2.host + options2.path);
 
 
         var json = JSON.parse(body);
@@ -159,8 +175,8 @@ function addStreamersForGame(game,isLast)
                     username: 'tacomod1442',
                     password: 'oauth:h86863wkv1ozgufno15uhxoeyg98gq'
                 },
-                // channels: streamernames
-                channels: ["moonmeander"]
+                channels: streamernames
+                // channels: ["moonmeander"]
             });
 
 
@@ -218,7 +234,6 @@ function addStreamersForGame(game,isLast)
                             repeatedChats[repeatedChats.length-1].streamers[lowchan] = 1;
                         }
 
-
                         if(streamerChats[lowchan] == null)
                         {
                             streamerChats[lowchan] = [];
@@ -244,22 +259,47 @@ function addStreamersForGame(game,isLast)
                             }
                         }
 
+                        if(streamerRatio[lowchan] == null)
+                        {
+                            streamerRatio[lowchan] = {copy: 0, real: 0};
+                        }
+                        else
+                        {
+                            streamerRatio[lowchan].copy += 1;
+                        }
+
 
                         fs.writeFile('trends/trends.json', JSON.stringify(repeatedChats), function (err) {
                               if (err) return console.log(err);
                               // console.log('Hello World > helloworld.txt');
                         });
+
+
                         didFind = true;
                         break;
+                    }
+                    else
+                    {
                     }
                 }
                 if(!didFind)
                 {
                     recentChats.push(message);
+                    if(streamerRatio[lowchan] == null)
+                    {
+                        streamerRatio[lowchan] = {copy: 0, real: 0};
+                    }
+                    else
+                    {
+                        streamerRatio[lowchan].real += 1;
+                    }
                 }
 
 
-
+                fs.writeFile('stream/ratio.json', JSON.stringify(streamerRatio), function (err) {
+                              if (err) return console.log(err);
+                              // console.log('Hello World > helloworld.txt');
+                        });
 
 
                 // console.log(streamerChats);
@@ -275,6 +315,7 @@ function addStreamersForGame(game,isLast)
         //JSON = THE JSON WITH ALL TOP 100 GAMES ON TWITCH.
       })
     });
+    }
 }
 
 req.on('error', function(e) {
