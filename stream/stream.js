@@ -69,7 +69,7 @@ socket.on('newChat', function (data)
 function changeStreamer()
 {
   // streamer =
-  location.replace("?stream=" + $("#newstreamer").val());
+  location.replace("?streamer=" + $("#newstreamer").val());
 }
 
 function loaded()
@@ -80,7 +80,7 @@ function loaded()
 
 	if(streamer == null)
 	{
-		streamer = "scarra";
+		streamer = "scarra2";
 	}
 
 
@@ -94,7 +94,10 @@ function loaded()
 
       for(var i = 0; i < data.length; i++)
         {
-
+          if(i > 100)
+          {
+            break;
+          }
             console.log("filled row");
             $("#stats").html($("#stats").html() + "<tr><td><a href=\"../chat/?chat=" + data[i].message + "\">" + data[i].message + "</td><td>" + data[i].repeats + "</td></tr>");
             // $("#stats").html($("#stats").html() + "<tr><td>\"" + data[i].message + "\"</td><td>" + data[i].repeats + "</td></tr>");

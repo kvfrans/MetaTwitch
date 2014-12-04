@@ -15,7 +15,7 @@ function GetUrlValue(VarSearch){
     for(var i = 0; i < VariableArray.length; i++){
         var KeyValuePair = VariableArray[i].split('=');
         if(KeyValuePair[0] == VarSearch){
-            return KeyValuePair[1];
+            return decodeURIComponent(KeyValuePair[1]);
         }
     }
 }
@@ -65,7 +65,7 @@ socket.on('newChat', function (data)
 function changeStreamer()
 {
   // streamer =
-  location.replace("?stream=" + $("#newstreamer").val());
+  location.replace("?chat=" + $("#newstreamer").val());
 }
 
 function loaded()
@@ -73,14 +73,17 @@ function loaded()
 
 
 
-	streamer = GetUrlValue("chat").replace("+"," ");
+	streamer = GetUrlValue("chat")
+  console.log(streamer);
 
-  $("#title").html("stats for \"" + streamer + "\"");
 
 	if(streamer == null)
 	{
 		streamer = "Kappa";
 	}
+
+    $("#title").html("stats for \"" + streamer + "\"");
+
 
 
 
@@ -93,7 +96,7 @@ function loaded()
 
     for(var i = 0; i < data.length; i++)
     {
-      console.log(data[i].message);
+      // console.log(data[i].message);
       if(data[i].message == streamer)
       {
         chatData = data[i].streamers;
@@ -171,6 +174,11 @@ function compare(a,b) {
   if (a.repeats > b.repeats)
     return -1;
   return 0;
+}
+
+String.prototype.replaceAll = function(str1, str2, ignore)
+{
+    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
 }
 
 
