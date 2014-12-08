@@ -8,6 +8,8 @@ var isStarted = false;
 var secondspast = 0;
 // create an new instance of a pixi stage
 
+var chatcount = 0;
+
 
 
 
@@ -16,6 +18,7 @@ socket.on('newChat', function (data)
     // console.log(data.user);
     if(isStarted)
     {
+        chatcount++;
         if(streamerstats[data.channel].chats <= 0)
         {
             streamerstats[data.channel].secondslate = secondspast;
@@ -25,6 +28,12 @@ socket.on('newChat', function (data)
         d.scrollTop(d.prop("scrollHeight"));
         // console.log(data.channel);
         streamerstats[data.channel].chats++;
+
+        if(chatcount > 100)
+        {
+            $("#chatbox").html("");
+            chatcount = 0;
+        }
         // console.log(streamerstats[data.channel].chats);
         // $("#chats-" + data.channel).html("chats: " + streamerstats[data.channel].chats);
 

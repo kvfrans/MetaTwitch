@@ -15,7 +15,12 @@ var streamersReady = false;
 // io.emit("hasStreamers",{});
 
 
-
+var CronJob = require('cron').CronJob;
+new CronJob('0 */5 * * * *', function(){
+    // console.log('You will see this message every second');
+    recentChats = [];
+    console.log("GET REKT NOOB I RESTARTED YOU");
+}, null, true, "America/Los_Angeles");
 
  io.on('connect', function() {
     // console.log('connected');
@@ -192,7 +197,7 @@ function addStreamersForGame(game,isLast)
                 //     // https://github.com/Schmoopiie/twitch-irc/wiki/Command:-Say
                 //     client.say(channel, 'Hey '+user.username+'! How you doing? Kappa');
                 // }
-                console.log("[" + channel + "] " + user.username + ": " + message);
+                // console.log("[" + channel + "] " + user.username + ": " + message);
                 io.emit("newChat",{message: message, user: user.username, channel: channel.replaceAll("#","")});
 
                 var lowchan = channel.replaceAll("#","");
@@ -210,6 +215,7 @@ function addStreamersForGame(game,isLast)
                             {
                                 foundInData = true;
                                 repeatedChats[i] = {message: message, repeats: repeatedChats[i].repeats + 1, streamers: repeatedChats[i].streamers};
+                                console.log("found a match");
 
                                 if(repeatedChats[i].streamers[lowchan] != null)
                                 {
