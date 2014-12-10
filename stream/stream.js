@@ -56,6 +56,7 @@ function compare(a,b) {
 
 
 
+
 socket.on('newChat', function (data)
 {
   if(data.channel == streamer)
@@ -83,6 +84,27 @@ function loaded()
 		streamer = "scarra2";
 	}
 
+  // var script = document.createElement("script");
+  //   script.type = "text/javascript";
+  //   script.src = "https://api.twitch.tv/kraken/channels/towelliee?callback=calledback";
+
+  $.ajax({
+                    url: 'https://api.twitch.tv/kraken/channels/' + streamer,
+                    dataType: 'jsonp',
+                    success: function(dataWeGotViaJsonp){
+                      console.log(dataWeGotViaJsonp);
+
+                      $("#thumbnail").attr("src", dataWeGotViaJsonp["logo"]);//dataWeGotViaJsonp["logo"];
+                        // var text = '';
+                        // var len = dataWeGotViaJsonp.length;
+                        // for(var i=0;i<len;i++){
+                        //     twitterEntry = dataWeGotViaJsonp[i];
+                        //     text += '<p><img src = "' + twitterEntry.user.profile_image_url_https +'"/>' + twitterEntry['text'] + '</p>'
+                        // }
+                        // $('#twitterFeed').html(text);
+                    }
+                });
+
 
 	jQuery.get('streamdata.json', function(data) {
     // var glacier = JSON.parse(data);
@@ -105,7 +127,18 @@ function loaded()
 
     // sortTable();
 });
+
+
+
+
 }
+
+function calledback()
+{
+  console.log("hi");
+}
+
+
 
 
 

@@ -15,20 +15,31 @@ var streamersReady = false;
 // io.emit("hasStreamers",{});
 
 
-var CronJob = require('cron').CronJob;
-new CronJob('0 */5 * * * *', function(){
-    // console.log('You will see this message every second');
-    recentChats = [];
-    console.log("GET REKT NOOB I RESTARTED YOU");
-}, null, true, "America/Los_Angeles");
+// var CronJob = require('cron').CronJob;
+// new CronJob('0 */5 * * * *', function(){
+//     // console.log('You will see this message every second');
+//     recentChats = [];
+//     console.log("GET REKT NOOB I RESTARTED YOU");
+// }, null, true, "America/Los_Angeles");
 
  io.on('connect', function() {
-    // console.log('connected');
+    console.log('connected');
     if(streamersReady)
     {
         io.emit("hasStreamers",{streamers: streamers});
     }
+
  });
+
+
+ io.on('connection', function (socket) {
+
+  io.on('news', function () {
+            console.log('I ');
+        });
+
+});
+
 
 
  //logging messages to check for repeats
